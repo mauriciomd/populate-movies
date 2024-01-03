@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: postgres
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER
+      interval: 10s
+      timeout: 5s
+      retries: 5
